@@ -81,7 +81,7 @@ for DIST in $DISTS; do
         log "Running \`./dockerdiff $built_image_id $repro_image_id\` might be useful."
         exit 1
     fi
-    rm build/${DIST}-repro.tar
+    rm build/${DIST}-$ARCH-repro.tar
     if [ -n "$pulled_image_id" ]; then
         if [ "$built_image_id" != "$pulled_image_id" ]; then
             log "Image changed $built_image_id (new) != $pulled_image_id (old)"
