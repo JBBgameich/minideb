@@ -38,17 +38,4 @@ fi
 
 for DIST in $DISTS; do
     DOCKER_CONTENT_TRUST=${ENABLE_DOCKER_CONTENT_TRUST} docker push "${BASENAME}:${DIST}"
-    docker push "${QUAY_BASENAME}:${DIST}"
-    gcloud docker -- push "${GCR_BASENAME}:${DIST}"
-done
-
-# Create and merge a PR to update minideb-extras
-CIRCLE_CI_FUNCTIONS_URL=${CIRCLE_CI_FUNCTIONS_URL:-https://raw.githubusercontent.com/bitnami/test-infra/master/circle/functions}
-source <(curl -sSL $CIRCLE_CI_FUNCTIONS_URL)
-for DIST in $DISTS; do
-    # Use '.RepoDigests 0' for getting Dockerhub repo digest as it was the first pushed
-    DIST_REPO_DIGEST=$(docker image inspect --format '{{index .RepoDigests 0}}' ${BASENAME}:${DIST})
-    update_minideb_derived "https://github.com/bitnami/minideb-extras" $DIST $DIST_REPO_DIGEST
-    update_minideb_derived "https://github.com/bitnami/minideb-extras-base" $DIST $DIST_REPO_DIGEST
-    update_minideb_derived "https://github.com/bitnami/minideb-runtimes" $DIST $DIST_REPO_DIGEST
 done
