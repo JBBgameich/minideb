@@ -93,10 +93,6 @@ for DIST in $DISTS; do
        fi
    fi
    docker tag $built_image_id $BASENAME:$DIST
-   docker tag $built_image_id $QUAY_BASENAME:$DIST
-   docker tag $built_image_id $GCR_BASENAME:$DIST
    log "Tagged $built_image_id as $BASENAME:$DIST $QUAY_BASENAME:$DIST $GCR_BASENAME:$DIST"
 done
 docker tag $BASENAME:$LATEST $BASENAME:latest
-docker tag $QUAY_BASENAME:$LATEST $QUAY_BASENAME:latest
-docker tag $GCR_BASENAME:$LATEST $GCR_BASENAME:latest
