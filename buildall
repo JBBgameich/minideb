@@ -40,7 +40,7 @@ unstable
 
 ARCH=$1
 
-if [ $ARCH !== "arm64" ]; then
+if [ "$ARCH" != "arm64" ]; then
     DISTS="$DISTS
     jessie
     "
