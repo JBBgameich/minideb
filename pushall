@@ -9,13 +9,8 @@ stretch
 testing
 unstable
 latest
-"
-ARCHS="
-amd64
-i386
-armhf
-arm64
-"
+
+ARCH=$1
 BASENAME=jbbgameich/minideb
 GCR_BASENAME=gcr.io/bitnami-containers/minideb
 QUAY_BASENAME=quay.io/bitnami/minideb
@@ -43,7 +38,5 @@ if [ -n "${DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE:-}" -a -n "${DOCKER_CONTEN
 fi
 
 for DIST in $DISTS; do
-    for ARCH in $ARCHS; do
-        DOCKER_CONTENT_TRUST=${ENABLE_DOCKER_CONTENT_TRUST} docker push "${BASENAME}:${DIST}-${ARCH}"
-    done
+    DOCKER_CONTENT_TRUST=${ENABLE_DOCKER_CONTENT_TRUST} docker push "${BASENAME}:${DIST}-${ARCH}"
 done

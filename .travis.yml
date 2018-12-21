@@ -1,9 +1,17 @@
 language: bash
 sudo: required
-script: sudo bash buildall
+script: sudo bash buildall $ARCH
 dist: xenial
 services:
   - docker
+
+matrix:
+  include:
+    - env: ARCH=armhf
+    - env: ARCH=arm64
+    - env: ARCH=amd64
+    - env: ARCH=i386
+
 before_install:
   - docker version
   # Fix for Ubuntu Xenial apt-daily.service triggering
@@ -24,7 +32,7 @@ install:
 
 deploy:
   provider: script
-  script: bash pushall
+  script: bash pushall $1
   skip_cleanup: true
   on:
     branch: master
