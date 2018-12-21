@@ -4,12 +4,20 @@ set -e
 set -u
 set -o pipefail
 
-DISTS="jessie
-stretch
+DISTS="stretch
 testing
 unstable
 latest
 "
+
+ARCH=$1
+
+if [ "$ARCH" != "arm64" ]; then
+    DISTS="$DISTS
+    jessie
+    "
+fi
+
 BASENAME=jbbgameich/minideb
 GCR_BASENAME=gcr.io/bitnami-containers/minideb
 QUAY_BASENAME=quay.io/bitnami/minideb
@@ -37,5 +45,5 @@ if [ -n "${DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE:-}" -a -n "${DOCKER_CONTEN
 fi
 
 for DIST in $DISTS; do
-    DOCKER_CONTENT_TRUST=${ENABLE_DOCKER_CONTENT_TRUST} docker push "${BASENAME}:${DIST}"
+    DOCKER_CONTENT_TRUST=${ENABLE_DOCKER_CONTENT_TRUST} docker push "${BASENAME}:${DIST}-${ARCH}"
 done

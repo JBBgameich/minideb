@@ -1,9 +1,17 @@
 language: bash
 sudo: required
-script: sudo bash buildall
+script: sudo bash buildall $ARCH
 dist: xenial
 services:
   - docker
+
+matrix:
+  include:
+    - env: ARCH=armhf
+    - env: ARCH=arm64
+    - env: ARCH=amd64
+    - env: ARCH=i386
+
 before_install:
   - docker version
   # Fix for Ubuntu Xenial apt-daily.service triggering
@@ -13,10 +21,18 @@ before_install:
       sleep 1
     done
   - sudo apt-get -qq update
-  - sudo apt-get install -y debian-archive-keyring debootstrap
+  - sudo apt-get install debian-archive-keyring -y
+  - echo "deb http://deb.debian.org/debian testing main" |sudo tee -a /etc/apt/sources.list
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+
+install:
+  - sudo apt-get install -y debootstrap qemu-user-static binfmt-support docker-ce
+
 deploy:
   provider: script
-  script: bash pushall
+  script: bash pushall $1
   skip_cleanup: true
   on:
     branch: master

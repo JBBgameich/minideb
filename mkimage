@@ -7,6 +7,7 @@ ROOT=$(cd $(dirname $0) && pwd)
 
 TARGET=${1:?Specify the target filename}
 DIST=${2:-stable}
+ARCH=${3:-$(dpkg --print-architecture)}
 
 LOGFILE=${TARGET}.log
 
@@ -30,7 +31,7 @@ DIRS_TO_TRIM="/usr/share/man
 
 rootfsDir=$(mktemp -d)
 echo "Building base in $rootfsDir"
-DEBOOTSTRAP_DIR=$DEBOOTSTRAP_DIR debootstrap --variant container --foreign ${DIST} "$rootfsDir"
+DEBOOTSTRAP_DIR=$DEBOOTSTRAP_DIR debootstrap --arch=$ARCH --variant container --foreign ${DIST} "$rootfsDir"
 chroot "$rootfsDir" bash debootstrap/debootstrap --second-stage
 
 echo -e "deb http://deb.debian.org/debian $DIST main" > "$rootfsDir/etc/apt/sources.list"
