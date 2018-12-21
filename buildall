@@ -64,7 +64,7 @@ for DIST in $DISTS; do
     log "============================================"
     log "Building $BASENAME:$DIST-$ARCH"
     log "============================================"
-    ./mkimage build/$DIST.tar $DIST $ARCH
+    ./mkimage build/$DIST-${ARCH}.tar $DIST $ARCH
     built_image_id=$(./import build/${DIST}-${ARCH}.tar "$target_ts")
     log "============================================"
     log "Running tests for $BASENAME:$DIST-$ARCH"
