@@ -10,7 +10,7 @@ unstable
 latest
 "
 
-ARCH=$1
+ARCH="$1"
 
 if [ "$ARCH" != "arm64" ]; then
     DISTS="$DISTS

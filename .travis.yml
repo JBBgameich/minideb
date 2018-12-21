@@ -32,7 +32,7 @@ install:
 
 deploy:
   provider: script
-  script: bash pushall $1
+  script: bash pushall $ARCH
   skip_cleanup: true
   on:
     branch: master
