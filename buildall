@@ -33,14 +33,21 @@ set -e
 set -u
 set -o pipefail
 
-DISTS="jessie
-stretch
+DISTS="stretch
 testing
 unstable
 "
-LATEST=stretch
 
 ARCH=$1
+
+if [ $ARCH !== "arm64" ]; then
+    DISTS="$DISTS
+    jessie
+    "
+fi
+
+LATEST=stretch
+
 BASENAME=jbbgameich/minideb
 GCR_BASENAME=gcr.io/bitnami-containers/minideb
 QUAY_BASENAME=quay.io/bitnami/minideb
