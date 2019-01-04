@@ -40,12 +40,6 @@ unstable
 
 ARCH=$1
 
-if [ "$ARCH" != "arm64" ]; then
-    DISTS="$DISTS
-    jessie
-    "
-fi
-
 LATEST=stretch
 
 BASENAME=jbbgameich/minideb
