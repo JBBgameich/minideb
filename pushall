@@ -15,6 +15,7 @@ ARCH="$1"
 BASENAME=jbbgameich/minideb
 GCR_BASENAME=gcr.io/bitnami-containers/minideb
 QUAY_BASENAME=quay.io/bitnami/minideb
+GITLAB_BASENAME=registry.gitlab.com/debian-pm/tools/build/debian
 
 if [ -n "${DOCKER_PASSWORD:-}" ]; then
     echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -26,6 +27,10 @@ fi
 
 if [ -n "${GCR_KEY:-}" ]; then
     gcloud auth activate-service-account "$GCR_EMAIL" --key-file <(echo "$GCR_KEY")
+fi
+
+if [ -n "${GITLAB_TOKEN:-}" ]; then
+    echo $GITLAB_TOKEN | docker login -u "$GITLAB_USERNAME" --password-stdin registry.gitlab.com
 fi
 
 ENABLE_DOCKER_CONTENT_TRUST=0
@@ -40,4 +45,5 @@ fi
 
 for DIST in $DISTS; do
     DOCKER_CONTENT_TRUST=${ENABLE_DOCKER_CONTENT_TRUST} docker push "${BASENAME}:${DIST}-${ARCH}"
+    docker push ${GITLAB_BASENAME}:${DIST}-${ARCH}
 done

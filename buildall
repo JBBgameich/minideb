@@ -45,6 +45,7 @@ LATEST=stretch
 BASENAME=jbbgameich/minideb
 GCR_BASENAME=gcr.io/bitnami-containers/minideb
 QUAY_BASENAME=quay.io/bitnami/minideb
+GITLAB_BASENAME=registry.gitlab.com/debian-pm/tools/build/debian
 
 mkdir -p build
 
@@ -95,6 +96,9 @@ for DIST in $DISTS; do
         fi
     fi
     docker tag $built_image_id $BASENAME:$DIST-$ARCH
+    docker tag $built_image_id $GITLAB_BASENAME:$DIST-$ARCH
     log "Tagged $built_image_id as $BASENAME:$DIST-$ARCH"
 done
+
 docker tag $BASENAME:$LATEST-$ARCH $BASENAME:latest-$ARCH
+docker tag $GITLAB_BASENAME:$LATEST-$ARCH $GITLAB_BASENAME:latest-$ARCH
