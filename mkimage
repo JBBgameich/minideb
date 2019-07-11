@@ -35,7 +35,7 @@ DEBOOTSTRAP_DIR=$DEBOOTSTRAP_DIR debootstrap --arch=$ARCH --variant container --
 chroot "$rootfsDir" bash debootstrap/debootstrap --second-stage
 
 echo -e "deb http://deb.debian.org/debian $DIST main" > "$rootfsDir/etc/apt/sources.list"
-if [ "$DIST" != "unstable" ]; then
+if [ "$DIST" != "unstable" ] && [ "$DIST" != "testing" ]; then
     echo "deb http://deb.debian.org/debian-security $DIST/updates main" >> "$rootfsDir/etc/apt/sources.list"
 fi
 

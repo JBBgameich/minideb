@@ -33,14 +33,14 @@ set -e
 set -u
 set -o pipefail
 
-DISTS="stretch
+DISTS="buster
 testing
 unstable
 "
 
 ARCH=$1
 
-LATEST=stretch
+LATEST=buster
 
 BASENAME=jbbgameich/minideb
 GCR_BASENAME=gcr.io/bitnami-containers/minideb
