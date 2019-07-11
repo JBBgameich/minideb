@@ -21,7 +21,9 @@ before_install:
       sleep 1
     done
   - sudo apt-get -qq update
-  - sudo apt-get install debian-archive-keyring -y
+  - sudo apt-get install debian-archive-keyring gnupg -y
+  - gpg --recv-keys 04EE7237B7D453EC 648ACFD622F3D138
+  - gpg --export 04EE7237B7D453EC 648ACFD622F3D138 | apt-key add –
   - echo "deb http://deb.debian.org/debian testing main" |sudo tee -a /etc/apt/sources.list
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
