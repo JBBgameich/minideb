@@ -20,11 +20,10 @@ before_install:
     while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
       sleep 1
     done
+  - echo "deb [trusted=yes] http://deb.debian.org/debian testing main" |sudo tee /etc/apt/sources.list.d/debian.list
   - sudo apt-get -qq update
   - sudo apt-get install debian-archive-keyring gnupg -y
-  - gpg --recv-keys 04EE7237B7D453EC 648ACFD622F3D138
-  - gpg --export 04EE7237B7D453EC 648ACFD622F3D138 | apt-key add –
-  - echo "deb http://deb.debian.org/debian testing main" |sudo tee -a /etc/apt/sources.list
+  - echo "deb http://deb.debian.org/debian testing main" |sudo tee /etc/apt/sources.list.d/debian.list
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
   - sudo apt-get update
