@@ -1,7 +1,7 @@
 language: bash
 sudo: required
 script: sudo bash buildall $ARCH
-dist: xenial
+dist: bionic
 services:
   - docker
 
@@ -22,7 +22,7 @@ before_install:
     done
   - echo "deb [trusted=yes] http://deb.debian.org/debian testing main" |sudo tee /etc/apt/sources.list.d/debian.list
   - sudo apt-get -qq update
-  - sudo apt-get install debian-archive-keyring gnupg -y
+  - sudo apt-get install debian-archive-keyring gnupg curl -y
   - echo "deb http://deb.debian.org/debian testing main" |sudo tee /etc/apt/sources.list.d/debian.list
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
