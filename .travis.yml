@@ -25,6 +25,9 @@ before_install:
   - sudo apt-get install debian-archive-keyring gnupg curl -y
   - echo "deb http://deb.debian.org/debian testing main" |sudo tee /etc/apt/sources.list.d/debian.list
   - sudo apt-get update
+  - sudo apt clean
+  - true | docker system prune -a
+  - df -h
 
 install:
   - sudo apt-get install -y debootstrap qemu-user-static binfmt-support docker-ce
